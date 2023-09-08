@@ -1,0 +1,22 @@
+version: '3'
+services:
+  nginx:
+    env_file: .env
+
+    environment:
+      - WOWOW: "wowow"
+
+    restart:  always
+    build: 
+      context: srcs/requirements/nginx
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./requirements/nginx/www/:/var/www
+      - ./requirements/nginx/conf/:/conf
+
+secrets:
+  ssl_env:
+    file: .env
