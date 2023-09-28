@@ -1,22 +1,30 @@
 version: '3'
 services:
   nginx:
+    container_name: "nginx_inception"
     env_file: .env
-
-    environment:
-      - WOWOW: "wowow"
-
     restart:  always
     build: 
-      context: srcs/requirements/nginx
+      context: requirements/nginx
       dockerfile: ./Dockerfile
     ports:
-      - "80:80"
+      #- "80:80"
       - "443:443"
     volumes:
       - ./requirements/nginx/www/:/var/www
       - ./requirements/nginx/conf/:/conf
 
-secrets:
-  ssl_env:
-    file: .env
+  mariadb:
+    container_name: "mariadb_inception"
+    env_file: .env
+    restart:  always
+    build: 
+      context: requirements/mariadb
+      dockerfile: ./Dockerfile
+    ports:
+      - "3306:3306"
+
+  
+# secrets:
+#   ssl_env:
+#     file: .env
