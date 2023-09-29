@@ -1,13 +1,18 @@
 FROM alpine:latest
 
 RUN apk update && apk upgrade && apk --no-cache add \
-    php \
-	php-cgi \
-	php-mysql \
-	php-fpm \
-	php-pdo \
-	php-gd php-cli \
-	php-mbstring \
+	bash			\
+    php				\
+	php-cgi			\
+	php-fpm			\
+	php-pdo			\
+	php-gd php-cli	\
+	php-mbstring	\
+	mariadb-client	\
     && rm -rf /var/lib/apt/lists/*
+	#wordpress		\
+	#php-mysql		\
 
-CMD ["/bin/bash"]
+EXPOSE  9000
+
+CMD ["sleep", "infinity"]

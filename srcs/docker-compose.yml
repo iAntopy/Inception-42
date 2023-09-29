@@ -11,18 +11,32 @@ services:
       #- "80:80"
       - "443:443"
     volumes:
-      - ./requirements/nginx/www/:/var/www
-      - ./requirements/nginx/conf/:/conf
+      - ./requirements/wordpress/volume/:/var/www
 
   mariadb:
     container_name: "mariadb_inception"
     env_file: .env
-    restart:  always
+    #restart:  always
     build: 
       context: requirements/mariadb
       dockerfile: ./Dockerfile
     ports:
       - "3306:3306"
+    volumes:
+      - ./requirements/mariadb/volume:/var/lib/mysql
+#      - ./requirements/mariadb/tools:/tools
+
+  wordpress:
+    container_name: "wordpress_inception"
+    env_file: .env
+    #restart:  always
+    build: 
+      context: requirements/wordpress
+      dockerfile: ./Dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./requirements/wordpress/volume/:/var/www
 
   
 # secrets:
