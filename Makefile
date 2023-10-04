@@ -12,7 +12,11 @@
 
 SRCS=	./srcs
 
-all:
+all:	up
+
+up:
 	@echo "What to do from here"
 	docker-compose -f $(SRCS)/docker-compose.yml up
 
+down:
+	docker-compose -f $(SRCS)/docker-compose.yml down

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   nginx:
     container_name: "nginx_inception"
@@ -8,23 +8,14 @@ services:
       context: requirements/nginx
       dockerfile: ./Dockerfile
     ports:
-      #- "80:80"
       - "443:443"
+      #- "80:80"
+    networks:
+      - inception
+    depends_on:
+      - wordpress
     volumes:
-      - ./requirements/wordpress/volume/:/var/www
-
-  mariadb:
-    container_name: "mariadb_inception"
-    env_file: .env
-    #restart:  always
-    build: 
-      context: requirements/mariadb
-      dockerfile: ./Dockerfile
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./requirements/mariadb/volume:/var/lib/mysql
-#      - ./requirements/mariadb/tools:/tools
+      - wordpress_vlm:/var/www/html
 
   wordpress:
     container_name: "wordpress_inception"
@@ -33,12 +24,50 @@ services:
     build: 
       context: requirements/wordpress
       dockerfile: ./Dockerfile
-    ports:
-      - "9000:9000"
+    #ports:
+    #  - "9000:9000"
+    depends_on:
+      - mariadb
+    networks:
+      - inception
     volumes:
-      - ./requirements/wordpress/volume/:/var/www
+      - wordpress_vlm:/var/www/html
 
-  
+  mariadb:
+    container_name: "mariadb_inception"
+    env_file: .env
+    #restart:  always
+    build: 
+      context: requirements/mariadb
+      dockerfile: ./Dockerfile
+    #ports:
+     # - "3306:3306"
+    networks:
+      - inception
+    volumes:
+      #- ./requirements/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+      - mariadb_vlm:/var/lib/mysql
+#      - ./requirements/mariadb/tools:/tools
+
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+volumes:
+  wordpress_vlm:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./requirements/wordpress/volume/
+  mariadb_vlm:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./requirements/mariadb/volume/
 # secrets:
 #   ssl_env:
 #     file: .env

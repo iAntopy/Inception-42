@@ -10,12 +10,18 @@ fi
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     echo "-> (MariaDB) Installing MySQL Data Directory...";
     chown -R mysql:mysql /var/lib/mysql;
-    mysql_install_db;
-    #mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql;
-    sed -i "s/\r//g ; s/WP_DB_NAME/$WP_DB_NAME/g ; s/WP_DB_PASS/$WP_DB_PASS/g ; s/WP_DB_USER/$WP_DB_USER/g ; s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/g" /var/lib/mysql/mysql_config.sql;
+    #mysql_install_db;
+    mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=$MYSQL_USER;
+    #sed -i "s/\r//g ; s/WP_DB_NAME/$WP_DB_NAME/g ; s/WP_DB_PASS/$WP_DB_PASS/g ; s/WP_DB_USER/$MYSQL_USER/g ; s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/g" /var/lib/mysql/mysql_config.sql;
+    sed -i "s/\r//g ; s/MYSQL_DATABASE/$MYSQL_DATABASE/g ; s/MYSQL_PASSWORD/$MYSQL_PASSWORD/g ; s/MYSQL_USER/$MYSQL_USER/g ; s/MYSQL_ROOT_PASSWORD/$MYSQL_ROOT_PASSWORD/g" /usr/local/mysql/mysql_setup.sql;
     echo "-> (MariaDB) Configuring MySQL...";
+    echo "MYSQL_DATABASE : $MYSQL_DATABASE"
+    echo "MYSQL_USER : $MYSQL_USER"
+    echo "MYSQL_PASSWORD : $MYSQL_PASSWORD"
+    echo "MYSQL_ROOT_PASSWORD : $MYSQL_ROOT_PASSWORD"
+    cat /usr/local/mysql/mysql_setup.sql
 
-    /usr/bin/mysqld --bootstrap < /var/lib/mysql/mysql_setup.sql;
+    /usr/bin/mysqld --bootstrap < /usr/local/mysql/mysql_setup.sql;
     #/usr/bin/mysqld --user=mysql --bootstrap < /var/lib/mysql/mysql_config.sql;
     echo "-> (MariaDB) MySQL configuration done.";
 fi
