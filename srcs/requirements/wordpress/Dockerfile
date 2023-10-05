@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 #RUN apk update && apk upgrade && apk --no-cache add \
-RUN apk update && apk upgrade && apk add \
+RUN apk update && apk upgrade && apk --no-cache add \
 	wget			\
     php81			\
 	php81-mysqli		\
