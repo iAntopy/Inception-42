@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.18.3
 
 #RUN apk update && apk upgrade && apk --no-cache add \
 RUN apk update && apk upgrade && apk --no-cache add \
