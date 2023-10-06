@@ -54,10 +54,10 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: ./requirements/wordpress/volume/
+      device: /home/iamongeo/data/wordpress
   mariadb_vlm:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: ./requirements/mariadb/volume/
+      device: /home/iamongeo/data/mariadb
