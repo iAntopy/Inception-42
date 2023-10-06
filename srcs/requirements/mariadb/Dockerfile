@@ -20,4 +20,8 @@ RUN chmod +x /usr/local/bin/mariadb_install.sh
 
 EXPOSE 3306
 
-CMD ["/bin/sh", "/usr/local/bin/mariadb_install.sh" ]
+ENTRYPOINT [ "/usr/local/bin/mariadb_install.sh" ]
+
+CMD [ "/usr/bin/mysqld", "--console" ]
+
+#CMD ["/bin/sh", "/usr/local/bin/mariadb_install.sh" ]

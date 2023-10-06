@@ -86,7 +86,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 		cat "/var/www/html/wp-config.php"
 	else
 		echo "WordPress user create FAILURE !"
-		#exit 1
+		exit 1
 	fi 
 	echo "Wordpress is ready!"
 else
