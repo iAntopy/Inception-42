@@ -1,1 +1,0 @@
-echo $SSL_CLIENT_KEY_ALG

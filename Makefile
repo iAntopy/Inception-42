@@ -14,8 +14,14 @@ SRCS=	./srcs
 
 all:	up
 
-up:
-	@echo "What to do from here"
+env_check:
+	@test -f $(SRCS)/.env || (echo 'Missing .env file in $(SRCS) folder. Make sure to provid it or create one base on the .env_template file.' && exit 1)
+
+setup_volume:
+	@mkdir -p /home/iamongeo/data/mariadb
+	@mkdir -p /home/iamongeo/data/wordpress
+
+up:	setup_volume env_check
 	docker-compose -f $(SRCS)/docker-compose.yml up
 
 down:
