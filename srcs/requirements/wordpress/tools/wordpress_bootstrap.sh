@@ -15,7 +15,7 @@ echo "Checking if /var/www/html/wp-config.php is there ..."
 if [ ! -f /var/www/html/wp-config.php ]; then
 
 	chown -R www-data:www-data /var/www/
-	chown -R 755 /var/www
+	chmod -R 755 /var/www
 
 	echo 'Wordpress START INSTALL !'
 	mkdir -p /var/www/html
@@ -73,5 +73,8 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 else
 	echo "Wordpress already exist"
 fi
+
+chown -R www-data:www-data /var/www/
+chmod -R 755 /var/www
 
 exec "$@"
